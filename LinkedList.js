@@ -1,19 +1,19 @@
 class LinkedList {
   constructor() {
     this.head = null;
-    this.length = 0;
+    this.size = 0;
   }
 
-  get size() {
-    // returns the total number of nodes in the list
+  size() {
+    return this.size;
   }
 
-  get head() {
-    // returns first node
+  head() {
+    return this.head;
   }
 
-  get tail() {
-    // returns last node
+  tail() {
+    return this.tail;
   }
 
   append(value) {
@@ -22,32 +22,62 @@ class LinkedList {
 
   prepend(value) {
     // adds a new node containing value to the start of the list
+    const newHead = new Node(value, this.head);
+    this.head = newHead;
+    this.size++;
   }
 
   at(index) {
-    // returns node at given index
+    if (index < 0 || index >= this.size) return null;
+
+    let currentIndex = this.head;
+    for (let i = 0; i < index; i++) {
+      currentIndex = currentIndex.next;
+    }
+    return currentIndex;
   }
 
   pop() {
     // removes last element from list
   }
 
-  contains(value) {
-    // returns true if the passed in value is in the list and otherwise returns false
+  contains(input) {
+    let currentIndex = this.head;
+    while (currentIndex) {
+      currentIndex = currentIndex.next;
+      if (currentIndex.value == input) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
-  find(value) {
+  findIndex(value) {
     // returns the index of the node containing value, or null if not found
   }
 
   toString() {
-    // represents your LinkedList objects as strings, so you can print them out
-    // and preview them in the console. The format should be:
-    // ( value ) -> ( value ) -> ( value ) -> null
+    let string = "";
+    let currentIndex = this.head;
+    while (currentIndex) {
+      string = `${string}${currentIndex.value} -> `;
+      currentIndex = currentIndex.next;
+    }
+    console.log(`${string}null`);
   }
 
-  insertAt(value, index) {
-    // inserts a new node with the provided value at the given index
+  insertAt(index, value) {
+    if (index === 0) return this.prepend(value);
+    const previous = this.at(index - 1);
+    if (previous == null) return null;
+    previous.next = new Node(value, previous.next);
+    this.size++;
+  }
+
+  removeHead() {
+    this.head = this.head.next;
+    this.size--;
   }
 
   removeAt(index) {
@@ -61,3 +91,11 @@ class Node {
     this.next = next;
   }
 }
+
+const ll = new LinkedList();
+ll.prepend(10);
+ll.prepend(22);
+ll.prepend(55);
+ll.insertAt(1, 30);
+// ll.removeHead();
+ll.toString();

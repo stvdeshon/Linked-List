@@ -81,7 +81,13 @@ class LinkedList {
   }
 
   removeAt(index) {
-    // removes the node at the given index
+    if (index === 0) return this.removeHead();
+
+    const previous = this.at(index - 1);
+    if (previous == null) return null;
+
+    previous.next = previous.next.next;
+    this.size--;
   }
 }
 
@@ -97,5 +103,5 @@ ll.prepend(10);
 ll.prepend(22);
 ll.prepend(55);
 ll.insertAt(1, 30);
-// ll.removeHead();
+ll.removeAt(2);
 ll.toString();

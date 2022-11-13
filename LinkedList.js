@@ -16,8 +16,12 @@ class LinkedList {
   }
 
   tailNode() {
-    if (!this.head) return null;
-    return console.log(`The value of the tail node is ${this.tail}.`);
+    let currentIndex = this.head;
+    // if (!this.head) return null;
+    while (currentIndex.next != null) {
+      currentIndex = currentIndex.next;
+    }
+    return console.log(`The value of the tail node is ${currentIndex.value}.`);
   }
 
   prepend(value) {
@@ -29,10 +33,23 @@ class LinkedList {
 
   append(value) {
     // adds a new node containing value to the end of the list
+    let currentIndex = this.head;
+    const newNode = new Node(value);
+    while (currentIndex.next != null) {
+      currentIndex = currentIndex.next;
+    }
+    currentIndex.next = newNode;
+    this.length++;
   }
 
   pop() {
-    // removes last element from list
+    // removes the tail node
+    let currentIndex = this.head;
+    while (currentIndex.next.next != null) {
+      currentIndex = currentIndex.next;
+    }
+    currentIndex.next = null;
+    this.length--;
   }
 
   at(index) {
@@ -113,13 +130,16 @@ const ll = new LinkedList();
 ll.prepend(10);
 ll.prepend(22);
 ll.prepend(55);
+ll.append(16);
 ll.insertAt(1, 30);
 // ll.size();
 ll.removeAt(2);
-// ll.toString();
+ll.toString();
 // ll.size();
 ll.at(0);
 ll.headNode();
 ll.tailNode();
 ll.contains(55);
-ll.findIndex(55);
+ll.pop();
+ll.findIndex(16);
+ll.toString();

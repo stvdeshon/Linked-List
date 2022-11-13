@@ -1,34 +1,42 @@
 class LinkedList {
   constructor() {
     this.head = null;
-    this.size = 0;
+    this.length = 0;
   }
 
   size() {
-    return this.size;
+    if (!this.head) return null;
+    return console.log(`This linked list is ${this.length} units long.`);
   }
 
-  head() {
-    return this.head;
+  headNode() {
+    let node = this.at(0).value;
+    if (!this.head) return null;
+    return console.log(`The value of the head node is ${node}.`);
   }
 
-  tail() {
-    return this.tail;
-  }
-
-  append(value) {
-    // adds a new node containing value to the end of the list
+  tailNode() {
+    if (!this.head) return null;
+    return console.log(`The value of the tail node is ${this.tail}.`);
   }
 
   prepend(value) {
     // adds a new node containing value to the start of the list
     const newHead = new Node(value, this.head);
     this.head = newHead;
-    this.size++;
+    this.length++;
+  }
+
+  append(value) {
+    // adds a new node containing value to the end of the list
+  }
+
+  pop() {
+    // removes last element from list
   }
 
   at(index) {
-    if (index < 0 || index >= this.size) return null;
+    if (index < 0 || index >= this.length) return null;
 
     let currentIndex = this.head;
     for (let i = 0; i < index; i++) {
@@ -37,24 +45,27 @@ class LinkedList {
     return currentIndex;
   }
 
-  pop() {
-    // removes last element from list
-  }
-
   contains(input) {
     let currentIndex = this.head;
-    while (currentIndex) {
+    while (currentIndex && currentIndex.value !== input) {
       currentIndex = currentIndex.next;
-      if (currentIndex.value == input) {
-        return true;
-      } else {
-        return false;
-      }
     }
+    return currentIndex == null ? false : true;
   }
 
   findIndex(value) {
     // returns the index of the node containing value, or null if not found
+    let currentIndex = this.head;
+    let output = 0;
+    while (currentIndex) {
+      if (currentIndex.value == value) {
+        return console.log(`The value is at index ${output}`);
+      }
+      output++;
+      currentIndex = currentIndex.next;
+    }
+
+    return null;
   }
 
   toString() {
@@ -72,12 +83,12 @@ class LinkedList {
     const previous = this.at(index - 1);
     if (previous == null) return null;
     previous.next = new Node(value, previous.next);
-    this.size++;
+    this.length++;
   }
 
   removeHead() {
     this.head = this.head.next;
-    this.size--;
+    this.length--;
   }
 
   removeAt(index) {
@@ -87,7 +98,7 @@ class LinkedList {
     if (previous == null) return null;
 
     previous.next = previous.next.next;
-    this.size--;
+    this.length--;
   }
 }
 
@@ -103,5 +114,12 @@ ll.prepend(10);
 ll.prepend(22);
 ll.prepend(55);
 ll.insertAt(1, 30);
+// ll.size();
 ll.removeAt(2);
-ll.toString();
+// ll.toString();
+// ll.size();
+ll.at(0);
+ll.headNode();
+ll.tailNode();
+ll.contains(55);
+ll.findIndex(55);
